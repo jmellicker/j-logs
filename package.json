@@ -1,0 +1,16 @@
+{
+  "name": "@jmellicker/jlogs",
+  "version": "0.0.01",
+  "description": "Cool colored console logs for Node and browser.",
+  "main": "index.js",
+  "scripts": {
+    "release": "release-it"
+  },
+  "devDependencies": {
+    "release-it": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmellicker/jlogs.git"
+  }
+}
