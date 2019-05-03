@@ -1,6 +1,6 @@
 {
   "name": "@jmellicker/jlogs",
-  "version": "0.0.01",
+  "version": "0.0.1",
   "description": "Cool colored console logs for Node and browser.",
   "main": "index.js",
   "scripts": {
@@ -12,5 +12,14 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jmellicker/jlogs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jmellicker/jlogs/issues"
+  },
+  "homepage": "https://github.com/jmellicker/jlogs#readme",
+  "author": "jmellicker",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.4.2"
   }
 }

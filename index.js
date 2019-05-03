@@ -45,13 +45,13 @@ function nodePrint(color, type, str) {
 
 browserColors = {
 
-    p(str) { this.browserPrint(str, 'color: #8a2be2;') },
-    b(str) { this.browserPrint(str, 'color: blue;') },
-    c(str) { this.browserPrint(str, 'color: #00bbcc;') },
-    g(str) { this.browserPrint(str, 'color: green;') },
-    y(str) { this.browserPrint(str, 'color: #ffcc00;') },
-    o(str) { this.browserPrint(str, 'color: #ffa500;') },
-    r(str) { this.browserPrint(str, 'color: red;') },
+    p(str) { browserPrint(str, 'color: #8a2be2;') },
+    b(str) { browserPrint(str, 'color: blue;') },
+    c(str) { browserPrint(str, 'color: #00bbcc;') },
+    g(str) { browserPrint(str, 'color: green;') },
+    y(str) { browserPrint(str, 'color: #ffcc00;') },
+    o(str) { browserPrint(str, 'color: #ffa500;') },
+    r(str) { browserPrint(str, 'color: red;') },
 
     ph(str) { this.p(makeHeader(str)); },
     bh(str) { this.b(makeHeader(str)); },
@@ -61,13 +61,13 @@ browserColors = {
     oh(str) { this.o(makeHeader(str)); },
     rh(str) { this.r(makeHeader(str)); },
 
-    pb(str) { this.browserPrint(str, 'background: #8a2be2; color: white; padding: 3px;') },
-    bb(str) { this.browserPrint(str, 'background: blue; color: white; padding: 3px;') },
-    cb(str) { this.browserPrint(str, 'background: #00bbcc; color: white; padding: 3px;') },
-    gb(str) { this.browserPrint(str, 'background: green; color: white; padding: 3px;') },
-    yb(str) { this.browserPrint(str, 'background: #ffcc00; color: black; padding: 3px;') },
-    ob(str) { this.browserPrint(str, 'background: #ffa500; color: white; padding: 3px;') },
-    rb(str) { this.browserPrint(str, 'background: red; color: white; padding: 3px;') },
+    pb(str) { browserPrint(str, 'background: #8a2be2; color: white; padding: 3px;') },
+    bb(str) { browserPrint(str, 'background: blue; color: white; padding: 3px;') },
+    cb(str) { browserPrint(str, 'background: #00bbcc; color: white; padding: 3px;') },
+    gb(str) { browserPrint(str, 'background: green; color: white; padding: 3px;') },
+    yb(str) { browserPrint(str, 'background: #ffcc00; color: black; padding: 3px;') },
+    ob(str) { browserPrint(str, 'background: #ffa500; color: white; padding: 3px;') },
+    rb(str) { browserPrint(str, 'background: red; color: white; padding: 3px;') },
 
     pbh(str) { this.pb(makeHeader(str)); },
     bbh(str) { this.bb(makeHeader(str)); },
