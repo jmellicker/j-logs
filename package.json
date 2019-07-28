@@ -4,7 +4,7 @@
   "description": "Cool colored console logs for Node and browser.",
   "main": "index.js",
   "scripts": {
-    "release": "release-it"
+    "release": "release-it --ci"
   },
   "devDependencies": {
     "release-it": "*"
