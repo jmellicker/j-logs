@@ -1,13 +1,14 @@
 {
   "name": "@jmellicker/jlogs",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Cool colored console logs for Node and browser.",
   "main": "index.js",
   "scripts": {
+    "bumpVersion": "yarn version --patch --no-git-tag-version",
     "release": "release-it --ci"
   },
   "devDependencies": {
-    "release-it": "*"
+    "release-it": "^14.2.2"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,10 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "dotenv": "^8.2.0"
+  },
+  "release-it": {
+    "github": {
+      "release": true
+    }
   }
 }
