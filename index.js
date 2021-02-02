@@ -1,3 +1,4 @@
+require('dotenv').config()
 const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined'
 let chalk
 
@@ -43,7 +44,9 @@ nodeColors = {
 }
 
 function nodePrint(color, type, str) {
-    console.log(chalk[type](color)(pretty(str)))
+    if (process.env.NODE_ENV !== 'production') {
+        console.log(chalk[type](color)(pretty(str)))
+    }
 }
 
 browserColors = {
@@ -87,7 +90,9 @@ browserColors = {
 }
 
 function browserPrint(str, css) {
-    console.log('%c ' + pretty(str) + ' ', css)
+    if (process.env.NODE_ENV !== 'production') {
+        console.log('%c ' + pretty(str) + ' ', css)
+    }
 }
 
 function pretty(str) {
