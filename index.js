@@ -95,4 +95,4 @@ function pretty(str) {
 
 function makeHeader(str) { return '======== ' + pretty(str) + ' ========' }
 
-module.exports = isBrowser ? browserColors : nodeColors
+export default isBrowser ? browserColors : nodeColors
