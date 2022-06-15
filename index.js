@@ -1,7 +1,5 @@
+import chalk from 'chalk';
 const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined'
-let chalk
-
-if (!isBrowser) chalk = require('chalk')
 
 const nodeColors = {
 
