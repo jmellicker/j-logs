@@ -3,7 +3,7 @@ let chalk
 
 if (!isBrowser) chalk = require('chalk')
 
-nodeColors = {
+const nodeColors = {
 
     p: (str) => { nodePrint('#C16DFF', 'hex', str) },
     b: (str) => { nodePrint('#7B8DFF', 'hex', str) },
@@ -46,7 +46,7 @@ function nodePrint(color, type, str) {
     console.log(chalk[type](color)(pretty(str)))
 }
 
-browserColors = {
+const browserColors = {
 
     p(str) { browserPrint(str, 'color: #a875d9;') },
     b(str) { browserPrint(str, 'color: #6485cc;') },
