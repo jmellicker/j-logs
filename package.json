@@ -17,6 +17,7 @@
   "bugs": {
     "url": "https://github.com/jmellicker/jlogs/issues"
   },
+  "type": "module",
   "homepage": "https://github.com/jmellicker/jlogs#readme",
   "author": "jmellicker",
   "license": "MIT",

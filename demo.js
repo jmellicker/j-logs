@@ -1,4 +1,4 @@
-import c from './index'
+import c from './index.js'
 
 c.p('purple')
 c.b('blue')
