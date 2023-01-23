@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "bumpVersion": "yarn version --patch --no-git-tag-version",
+    "r": "yarn release-new-version",
+    "release-new-version": "npx release-it --ci",
     "release": "release-it --ci"
   },
   "devDependencies": {

@@ -1,4 +1,7 @@
-import chalk from 'chalk';
+// import chalk from 'chalk';
+let chalk
+if (!isBrowser) chalk = require('chalk')
+
 const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined'
 
 const nodeColors = {
@@ -95,4 +98,4 @@ function pretty(str) {
 
 function makeHeader(str) { return '======== ' + pretty(str) + ' ========' }
 
-export default isBrowser ? browserColors : nodeColors
+module.exports = isBrowser ? browserColors : nodeColors

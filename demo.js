@@ -1,4 +1,6 @@
-import c from './index'
+// import c from './index'
+
+const c = require('./index')
 
 c.p('purple')
 c.b('blue')
