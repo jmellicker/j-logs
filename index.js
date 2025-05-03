@@ -115,7 +115,7 @@ const nodeColors = {
 
         // Check if any of the arguments contain color tags
         const hasColorTags = args.some(arg =>
-            typeof arg === 'string' && arg.match(/#[rgbycpom]\s/)
+            typeof arg === 'string' && arg.match(/#[a-z]+\s/)
         )
 
         // If no color tags, just join and print normally
@@ -144,24 +144,25 @@ const nodeColors = {
             combinedStr += arg
         }
 
-        // Parse the combined string for color tags (#x)
-        const parts = combinedStr.split(/(#[rgbycpom]\s)/)
+        // Parse the combined string for color tags (#xxx)
+        // Match any tag that starts with # followed by 1-3 lowercase letters and a space
+        const parts = combinedStr.split(/(#[a-z]{1,3}\s)/)
         const segments = []
 
-        let currentColor = null
+        let currentColorCode = null
         let buffer = ''
 
         for (let i = 0; i < parts.length; i++) {
             const part = parts[i]
 
-            if (part.match(/^#[rgbycpom]\s$/)) {
+            if (part.match(/^#[a-z]{1,3}\s$/)) {
                 // If we have accumulated text with a color, add it to segments
                 if (buffer) {
-                    segments.push({ text: buffer, color: currentColor })
+                    segments.push({ text: buffer, colorCode: currentColorCode })
                     buffer = ''
                 }
-                // Set new current color
-                currentColor = part.trim().substring(1)
+                // Set new current color code
+                currentColorCode = part.trim().substring(1)
             } else if (part) {
                 // Accumulate text
                 buffer += part
@@ -170,15 +171,15 @@ const nodeColors = {
 
         // Add any remaining text
         if (buffer) {
-            segments.push({ text: buffer, color: currentColor })
+            segments.push({ text: buffer, colorCode: currentColorCode })
         }
 
         // Process each segment
         let output = ''
         for (const segment of segments) {
-            if (segment.color) {
-                // Use the corresponding color function directly
-                const coloredText = await colorizeText(getColorHex(segment.color), 'hex', segment.text)
+            if (segment.colorCode) {
+                // Process the color code to determine the styling
+                const coloredText = await applyColorCode(segment.colorCode, segment.text)
                 output += coloredText
             } else {
                 output += segment.text
@@ -248,7 +249,7 @@ const browserColors = {
 
         // Check if any of the arguments contain color tags
         const hasColorTags = args.some(arg =>
-            typeof arg === 'string' && arg.match(/#[rgbycpom]\s/)
+            typeof arg === 'string' && arg.match(/#[a-z]+\s/)
         )
 
         // If no color tags, just join and print normally
@@ -277,42 +278,40 @@ const browserColors = {
             combinedStr += arg
         }
 
-        // Parse the combined string for color tags (#x)
-        const parts = combinedStr.split(/(#[rgbycpom]\s)/)
+        // Parse the combined string for color tags (#xxx)
+        // Match any tag that starts with # followed by 1-3 lowercase letters and a space
+        const parts = combinedStr.split(/(#[a-z]{1,3}\s)/)
         const segments = []
         const styles = []
 
-        let currentColor = null
+        let currentColorCode = null
         let buffer = ''
 
         for (let i = 0; i < parts.length; i++) {
             const part = parts[i]
 
-            if (part.match(/^#[rgbycpom]\s$/)) {
+            if (part.match(/^#[a-z]{1,3}\s$/)) {
                 // If we have accumulated text with a color, add it to segments
                 if (buffer) {
-                    if (currentColor) {
-                        segments.push(`%c${buffer}`)
+                    if (currentColorCode) {
+                        // Check if it's a header
+                        let text = buffer
+                        if (currentColorCode.includes('h')) {
+                            text = makeHeader(text)
+                        }
 
-                        // Map color code to CSS
-                        let css = ''
-                        if (currentColor === 'r') css = 'color: red;'
-                        else if (currentColor === 'g') css = 'color: green;'
-                        else if (currentColor === 'b') css = 'color: #6485cc;'
-                        else if (currentColor === 'y') css = 'color: #ffcc00;'
-                        else if (currentColor === 'p') css = 'color: #a875d9;'
-                        else if (currentColor === 'c') css = 'color: #00bbcc;'
-                        else if (currentColor === 'o') css = 'color: #ffa500;'
-                        else if (currentColor === 'm') css = 'color: #f533b7;'
+                        segments.push(`%c${text}`)
 
+                        // Get CSS for the color code
+                        const css = getColorCodeCSS(currentColorCode)
                         styles.push(css)
                     } else {
                         segments.push(buffer)
                     }
                     buffer = ''
                 }
-                // Set new current color
-                currentColor = part.trim().substring(1)
+                // Set new current color code
+                currentColorCode = part.trim().substring(1)
             } else if (part) {
                 // Accumulate text
                 buffer += part
@@ -321,20 +320,17 @@ const browserColors = {
 
         // Add any remaining text
         if (buffer) {
-            if (currentColor) {
-                segments.push(`%c${buffer}`)
+            if (currentColorCode) {
+                // Check if it's a header
+                let text = buffer
+                if (currentColorCode.includes('h')) {
+                    text = makeHeader(text)
+                }
 
-                // Map color code to CSS
-                let css = ''
-                if (currentColor === 'r') css = 'color: red;'
-                else if (currentColor === 'g') css = 'color: green;'
-                else if (currentColor === 'b') css = 'color: #6485cc;'
-                else if (currentColor === 'y') css = 'color: #ffcc00;'
-                else if (currentColor === 'p') css = 'color: #a875d9;'
-                else if (currentColor === 'c') css = 'color: #00bbcc;'
-                else if (currentColor === 'o') css = 'color: #ffa500;'
-                else if (currentColor === 'm') css = 'color: #f533b7;'
+                segments.push(`%c${text}`)
 
+                // Get CSS for the color code
+                const css = getColorCodeCSS(currentColorCode)
                 styles.push(css)
             } else {
                 segments.push(buffer)
@@ -374,6 +370,116 @@ function getColorHex(colorCode) {
         case 'r': return '#F00000'
         default: return '#FFFFFF'
     }
+}
+
+// Function to get background hex color
+function getBgColorHex(colorCode) {
+    switch(colorCode) {
+        case 'p': return '#5E00A0'
+        case 'b': return '#002BFF'
+        case 'c': return '#00A9B2'
+        case 'g': return '#177F00'
+        case 'y': return '#A39800'
+        case 'o': return '#E86400'
+        case 'm': return '#f533b7'
+        case 'r': return '#F00000'
+        default: return '#000000'
+    }
+}
+
+// Function to process complex color codes for node environment
+async function applyColorCode(colorCode, text) {
+    // Dynamically import chalk if not in browser and chalk is not fully loaded
+    if (!isBrowser && (!chalk.hex || typeof chalk.hex !== 'function' || chalk.hex.toString().includes('=> text'))) {
+        try {
+            const chalkModule = await import('chalk')
+            chalk = chalkModule.default
+        } catch (err) {
+            return text // Return plain text if chalk fails to load
+        }
+    }
+
+    // Process the color code
+    let result = text
+
+    // Check if it's a complex code (2-3 characters)
+    if (colorCode.length > 1) {
+        // Handle background color (second character is 'b')
+        if (colorCode.includes('b')) {
+            const colorChar = colorCode.replace('b', '')[0]
+            const bgColor = getBgColorHex(colorChar)
+            result = chalk.bgHex(bgColor)(result)
+        }
+
+        // Handle header (code includes 'h')
+        if (colorCode.includes('h')) {
+            result = makeHeader(result)
+        }
+
+        // Apply foreground color (first character)
+        const colorChar = colorCode[0]
+        const fgColor = getColorHex(colorChar)
+        result = chalk.hex(fgColor)(result)
+    } else {
+        // Simple color code (just one character)
+        const fgColor = getColorHex(colorCode)
+        result = chalk.hex(fgColor)(result)
+    }
+
+    return result
+}
+
+// Function to get CSS for complex color codes in browser environment
+function getColorCodeCSS(colorCode) {
+    let css = ''
+    let isHeader = colorCode.includes('h')
+
+    // Check if it's a complex code (2-3 characters)
+    if (colorCode.length > 1) {
+        // Handle background color (second character is 'b')
+        if (colorCode.includes('b')) {
+            const colorChar = colorCode.replace(/[bh]/g, '')[0]
+            switch(colorChar) {
+                case 'p': css += 'background: #8a2be2; color: white; padding: 3px;'; break
+                case 'b': css += 'background: blue; color: white; padding: 3px;'; break
+                case 'c': css += 'background: #00bbcc; color: white; padding: 3px;'; break
+                case 'g': css += 'background: green; color: white; padding: 3px;'; break
+                case 'y': css += 'background: #ffcc00; color: black; padding: 3px;'; break
+                case 'o': css += 'background: #ffa500; color: white; padding: 3px;'; break
+                case 'm': css += 'background: #f533b7; color: white; padding: 3px;'; break
+                case 'r': css += 'background: red; color: white; padding: 3px;'; break
+                default: css += 'background: black; color: white; padding: 3px;'
+            }
+
+            // Add font-weight for headers
+            if (isHeader) {
+                css += ' font-weight: bold;'
+            }
+
+            return css // Background color already includes text color
+        }
+    }
+
+    // Apply foreground color (first character)
+    const colorChar = colorCode.replace(/[bh]/g, '')[0]
+    switch(colorChar) {
+        case 'r': css += 'color: red;'; break
+        case 'g': css += 'color: green;'; break
+        case 'b': css += 'color: #6485cc;'; break
+        case 'y': css += 'color: #ffcc00;'; break
+        case 'p': css += 'color: #a875d9;'; break
+        case 'c': css += 'color: #00bbcc;'; break
+        case 'o': css += 'color: #ffa500;'; break
+        case 'm': css += 'color: #f533b7;'; break
+        default: css += 'color: black;'
+    }
+
+    // Add font-weight for headers
+    if (isHeader) {
+        css += ' font-weight: bold;'
+    }
+
+    return css
 }
 
 // Function to colorize text without printing
