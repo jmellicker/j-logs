@@ -1,49 +1,58 @@
-// import chalk from 'chalk';
+// Dynamic import for chalk
 let chalk
 const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined'
-if (!isBrowser) chalk = require('chalk')
+// Use dynamic import for chalk in Node.js environment
+async function loadChalk() {
+  if (!isBrowser) {
+    chalk = (await import('chalk')).default
+  }
+}
+// Initialize chalk
+loadChalk()
 
 
 const nodeColors = {
 
-    p: (...args) => { nodePrint('#C16DFF', 'hex', formatArgs(args)) },
-    b: (...args) => { nodePrint('#7B8DFF', 'hex', formatArgs(args)) },
-    c: (...args) => { nodePrint('#7BE9FF', 'hex', formatArgs(args)) },
-    g: (...args) => { nodePrint('#31D80C', 'hex', formatArgs(args)) },
-    y: (...args) => { nodePrint('#E4D600', 'hex', formatArgs(args)) },
-    o: (...args) => { nodePrint('#E86400', 'hex', formatArgs(args)) },
-    m: (...args) => { nodePrint('#f533b7', 'hex', formatArgs(args)) },
-    r: (...args) => { nodePrint('#F00000', 'hex', formatArgs(args)) },
+    p: (...args) => { nodePrint('#C16DFF', 'hex', formatArgs(args)).catch(console.error) },
+    b: (...args) => { nodePrint('#7B8DFF', 'hex', formatArgs(args)).catch(console.error) },
+    c: (...args) => { nodePrint('#7BE9FF', 'hex', formatArgs(args)).catch(console.error) },
+    g: (...args) => { nodePrint('#31D80C', 'hex', formatArgs(args)).catch(console.error) },
+    y: (...args) => { nodePrint('#E4D600', 'hex', formatArgs(args)).catch(console.error) },
+    o: (...args) => { nodePrint('#E86400', 'hex', formatArgs(args)).catch(console.error) },
+    m: (...args) => { nodePrint('#f533b7', 'hex', formatArgs(args)).catch(console.error) },
+    r: (...args) => { nodePrint('#F00000', 'hex', formatArgs(args)).catch(console.error) },
 
-    ph: (...args) => { nodePrint('#C16DFF', 'hex', makeHeader(formatArgs(args))) },
-    bh: (...args) => { nodePrint('#7B8DFF', 'hex', makeHeader(formatArgs(args))) },
-    ch: (...args) => { nodePrint('#7BE9FF', 'hex', makeHeader(formatArgs(args))) },
-    gh: (...args) => { nodePrint('#31D80C', 'hex', makeHeader(formatArgs(args))) },
-    yh: (...args) => { nodePrint('#E4D600', 'hex', makeHeader(formatArgs(args))) },
-    oh: (...args) => { nodePrint('#E86400', 'hex', makeHeader(formatArgs(args))) },
-    mh: (...args) => { nodePrint('#f533b7', 'hex', makeHeader(formatArgs(args))) },
-    rh: (...args) => { nodePrint('#F00000', 'hex', makeHeader(formatArgs(args))) },
+    ph: (...args) => { nodePrint('#C16DFF', 'hex', makeHeader(formatArgs(args))).catch(console.error) },
+    bh: (...args) => { nodePrint('#7B8DFF', 'hex', makeHeader(formatArgs(args))).catch(console.error) },
+    ch: (...args) => { nodePrint('#7BE9FF', 'hex', makeHeader(formatArgs(args))).catch(console.error) },
+    gh: (...args) => { nodePrint('#31D80C', 'hex', makeHeader(formatArgs(args))).catch(console.error) },
+    yh: (...args) => { nodePrint('#E4D600', 'hex', makeHeader(formatArgs(args))).catch(console.error) },
+    oh: (...args) => { nodePrint('#E86400', 'hex', makeHeader(formatArgs(args))).catch(console.error) },
+    mh: (...args) => { nodePrint('#f533b7', 'hex', makeHeader(formatArgs(args))).catch(console.error) },
+    rh: (...args) => { nodePrint('#F00000', 'hex', makeHeader(formatArgs(args))).catch(console.error) },
 
-    pb: (...args) => { nodePrint('#5E00A0', 'bgHex', formatArgs(args)) },
-    bb: (...args) => { nodePrint('#002BFF', 'bgHex', formatArgs(args)) },
-    cb: (...args) => { nodePrint('#00A9B2', 'bgHex', formatArgs(args)) },
-    gb: (...args) => { nodePrint('#177F00', 'bgHex', formatArgs(args)) },
-    yb: (...args) => { nodePrint('#A39800', 'bgHex', formatArgs(args)) },
-    ob: (...args) => { nodePrint('#E86400', 'bgHex', formatArgs(args)) },
-    mb: (...args) => { nodePrint('#f533b7', 'bgHex', formatArgs(args)) },
-    rb: (...args) => { nodePrint('#F00000', 'bgHex', formatArgs(args)) },
+    pb: (...args) => { nodePrint('#5E00A0', 'bgHex', formatArgs(args)).catch(console.error) },
+    bb: (...args) => { nodePrint('#002BFF', 'bgHex', formatArgs(args)).catch(console.error) },
+    cb: (...args) => { nodePrint('#00A9B2', 'bgHex', formatArgs(args)).catch(console.error) },
+    gb: (...args) => { nodePrint('#177F00', 'bgHex', formatArgs(args)).catch(console.error) },
+    yb: (...args) => { nodePrint('#A39800', 'bgHex', formatArgs(args)).catch(console.error) },
+    ob: (...args) => { nodePrint('#E86400', 'bgHex', formatArgs(args)).catch(console.error) },
+    mb: (...args) => { nodePrint('#f533b7', 'bgHex', formatArgs(args)).catch(console.error) },
+    rb: (...args) => { nodePrint('#F00000', 'bgHex', formatArgs(args)).catch(console.error) },
 
-    pbh: (...args) => { nodePrint('#5E00A0', 'bgHex', makeHeader(formatArgs(args))) },
-    bbh: (...args) => { nodePrint('#002BFF', 'bgHex', makeHeader(formatArgs(args))) },
-    cbh: (...args) => { nodePrint('#00A9B2', 'bgHex', makeHeader(formatArgs(args))) },
-    gbh: (...args) => { nodePrint('#177F00', 'bgHex', makeHeader(formatArgs(args))) },
-    ybh: (...args) => { nodePrint('#A39800', 'bgHex', makeHeader(formatArgs(args))) },
-    obh: (...args) => { nodePrint('#E86400', 'bgHex', makeHeader(formatArgs(args))) },
-    mbh: (...args) => { nodePrint('#f533b7', 'bgHex', makeHeader(formatArgs(args))) },
-    rbh: (...args) => { nodePrint('#F00000', 'bgHex', makeHeader(formatArgs(args))) }
+    pbh: (...args) => { nodePrint('#5E00A0', 'bgHex', makeHeader(formatArgs(args))).catch(console.error) },
+    bbh: (...args) => { nodePrint('#002BFF', 'bgHex', makeHeader(formatArgs(args))).catch(console.error) },
+    cbh: (...args) => { nodePrint('#00A9B2', 'bgHex', makeHeader(formatArgs(args))).catch(console.error) },
+    gbh: (...args) => { nodePrint('#177F00', 'bgHex', makeHeader(formatArgs(args))).catch(console.error) },
+    ybh: (...args) => { nodePrint('#A39800', 'bgHex', makeHeader(formatArgs(args))).catch(console.error) },
+    obh: (...args) => { nodePrint('#E86400', 'bgHex', makeHeader(formatArgs(args))).catch(console.error) },
+    mbh: (...args) => { nodePrint('#f533b7', 'bgHex', makeHeader(formatArgs(args))).catch(console.error) },
+    rbh: (...args) => { nodePrint('#F00000', 'bgHex', makeHeader(formatArgs(args))).catch(console.error) }
 }
 
-function nodePrint(color, type, str) {
+async function nodePrint(color, type, str) {
+    // Make sure chalk is loaded
+    if (!chalk) await loadChalk()
     console.log(chalk[type](color)(pretty(str)))
 }
 
