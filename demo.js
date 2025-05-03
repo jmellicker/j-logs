@@ -51,3 +51,15 @@ c.y('Warning:', 'Disk space low', '(10% remaining)')
 // Objects and mixed types
 c.c('User:', { name: 'John', age: 30 })
 c.m('Mixed types:', 'string', 123, { key: 'value' }, true)
+
+// Test c.l with single string
+console.log('=== Testing c.l with single string ===')
+c.l('#y hello #g there')
+c.l('#r Error: #y File not found')
+c.l('#g Success: #b Operation completed #p in 5ms')
+c.l('This is plain text') // No color specified
+
+// Test c.l with multiple arguments
+console.log('=== Testing c.l with multiple arguments ===')
+c.l('#r Error:', '#y File', 'not', 'found')
+c.l('#g Multiple', '#b Arguments', '#p With', 'Color', 'Tags')
