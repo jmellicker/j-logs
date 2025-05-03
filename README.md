@@ -1,5 +1,51 @@
 # jlogs
 
-`yarn add @jmellicker/jlogs`
+Cool colored console logs for Node and browser.
 
-`node demo`
+## Installation
+
+```bash
+yarn add @jmellicker/jlogs
+```
+
+## Usage
+
+Import the library:
+
+```javascript
+const c = require('@jmellicker/jlogs');
+```
+
+Use the various color functions:
+
+```javascript
+c.p('purple')
+c.b('blue')
+c.c('cyan')
+c.g('green')
+c.y('yellow')
+c.o('orange')
+c.m('magenta')
+c.r('red')
+```
+
+You can also use multiple arguments, just like console.log:
+
+```javascript
+c.b('Hello', 'World')
+c.g('Status:', 'Success')
+c.r('Error:', 'File not found')
+c.y('Warning:', 'Disk space low', '(10% remaining)')
+
+// Works with objects and mixed types too
+c.c('User:', { name: 'John', age: 30 })
+c.m('Mixed types:', 'string', 123, { key: 'value' }, true)
+```
+
+## Demo
+
+Run the included demo to see all available colors:
+
+```bash
+node demo
+```
