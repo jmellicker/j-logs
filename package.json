@@ -5,12 +5,10 @@
   "main": "index.js",
   "scripts": {
     "bumpVersion": "yarn version --patch --no-git-tag-version",
-    "r": "yarn release-new-version",
-    "release-new-version": "npx release-it --ci",
-    "release": "release-it --ci"
+    "r": "node release.js",
+    "release": "node release.js"
   },
   "devDependencies": {
-    "release-it": "^19.0.1"
   },
   "repository": {
     "type": "git",
@@ -24,13 +22,5 @@
   "license": "MIT",
   "dependencies": {
     "chalk": "^5.4.1"
-  },
-  "release-it": {
-    "github": {
-      "release": true
-    },
-    "npm": {
-      "skipChecks": true
-    }
   }
 }
