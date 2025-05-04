@@ -1,6 +1,6 @@
 {
   "name": "@jmellicker/jlogs",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Cool colored console logs for Node and browser.",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,9 @@
   "release-it": {
     "github": {
       "release": true
+    },
+    "npm": {
+      "skipChecks": true
     }
   }
 }
