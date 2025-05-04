@@ -49,3 +49,25 @@ Run the included demo to see all available colors:
 ```bash
 node demo
 ```
+
+## For Contributors
+
+### Release Process
+
+To release a new version of the package:
+
+1. Make sure all your changes are committed and pushed
+2. Run the release script:
+
+```bash
+yarn release
+```
+
+This will:
+- Increment the patch version in package.json
+- Publish the package to npm
+- Commit the version change
+- Create a git tag
+- Push changes and tags to GitHub
+
+You'll need to be logged in to npm (`npm login`) before running the release script.
