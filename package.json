@@ -10,7 +10,7 @@
     "release": "release-it --ci"
   },
   "devDependencies": {
-    "release-it": "^14.2.2"
+    "release-it": "^19.0.1"
   },
   "repository": {
     "type": "git",
