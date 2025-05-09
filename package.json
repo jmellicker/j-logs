@@ -1,15 +1,24 @@
 {
   "name": "@jmellicker/jlogs",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Cool colored console logs for Node and browser.",
   "main": "index.js",
+  "module": "index.js",
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "require": "./index.js"
+    }
+  },
+  "type": "commonjs",
   "scripts": {
     "bumpVersion": "yarn version --patch --no-git-tag-version",
     "r": "node release.js",
-    "release": "node release.js"
+    "release": "node release.js",
+    "test": "node demo.js",
+    "test:esm": "node es-module-test.mjs"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jmellicker/jlogs.git"
