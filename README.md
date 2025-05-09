@@ -12,8 +12,32 @@ yarn add @jmellicker/jlogs
 
 Import the library:
 
+### CommonJS (Node.js)
 ```javascript
 const c = require('@jmellicker/jlogs');
+```
+
+### ES Modules (Browser)
+```javascript
+import c from '@jmellicker/jlogs';
+```
+
+For browser projects using bundlers like Vite, Webpack, or Rollup:
+```javascript
+// In your Vue component or JavaScript file
+import c from '@jmellicker/jlogs';
+
+// Now you can use it
+c.b('Hello from the browser!');
+```
+
+For direct use in HTML:
+```html
+<script type="module">
+  import c from './node_modules/@jmellicker/jlogs/index.js';
+
+  c.r('This is a red message in the console');
+</script>
 ```
 
 Use the various color functions:

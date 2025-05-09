@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jlogs Browser Example</title>
+</head>
+<body>
+  <h1>jlogs Browser Example</h1>
+  <p>Open the browser console to see the colored logs</p>
+  
+  <script type="module">
+    // Import the library using ES module syntax
+    import c from './index.js';
+    
+    // Basic colors
+    c.p('purple');
+    c.b('blue');
+    c.c('cyan');
+    c.g('green');
+    c.y('yellow');
+    c.o('orange');
+    c.m('magenta');
+    c.r('red');
+    
+    // Multiple arguments
+    c.b('Hello', 'World');
+    c.g('Status:', 'Success');
+    
+    // Objects
+    c.c('User:', { name: 'John', age: 30 });
+  </script>
+</body>
+</html>

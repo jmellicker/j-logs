@@ -45,8 +45,8 @@ c.rbh('red background + header')
 // Multiple arguments examples
 c.b('Multiple', 'arguments', 'work', 'like', 'console.log')
 c.g('Status:', 'Success')
-c.r('Error:', 'Alien not found')
 c.y('Warning:', 'Asteroid approaching', '(10 days remaining)')
+c.r('Error:', 'Alien not found')
 
 // Objects and mixed types
 c.c('User:', { name: 'John', age: 30 })

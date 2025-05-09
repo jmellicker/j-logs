@@ -111,4 +111,13 @@ function formatArgs(args) {
 
 function makeHeader(str) { return '======== ' + pretty(str) + ' ========' }
 
-module.exports = isBrowser ? browserColors : nodeColors
+// Create the colors object based on environment
+const colors = isBrowser ? browserColors : nodeColors
+
+// CommonJS export
+module.exports = colors
+
+// Add support for ES modules
+if (typeof module !== 'undefined') {
+  module.exports.default = colors
+}

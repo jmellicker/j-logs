@@ -40,28 +40,28 @@ readline.question(`Proceed with release of version ${newVersion}? (y/n) `, (answ
     readline.close();
     process.exit(0);
   }
-  
+
   readline.close();
-  
+
   // Update version in package.json
   packageJson.version = newVersion;
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2) + '\n');
   console.log(`Updated package.json to version ${newVersion}`);
-  
+
   // Publish to npm
   console.log('Publishing to npm...');
-  run('npm publish');
-  
+  run('npm publish --registry=https://registry.npmjs.org/');
+
   // Git commit and tag
   console.log('Committing changes...');
   run('git add package.json');
   run(`git commit -m "Bump version to ${newVersion}"`);
-  
+
   console.log('Creating git tag...');
   run(`git tag v${newVersion}`);
-  
+
   console.log('Pushing to GitHub...');
   run('git push origin main --tags');
-  
+
   console.log(`\n✅ Successfully released version ${newVersion}!`);
 });
