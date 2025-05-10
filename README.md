@@ -34,7 +34,7 @@ c.b('Hello from the browser!');
 For direct use in HTML:
 ```html
 <script type="module">
-  import c from './node_modules/@jmellicker/jlogs/index.js';
+  import c from './node_modules/@jmellicker/jlogs/index.mjs';
 
   c.r('This is a red message in the console');
 </script>
@@ -64,6 +64,44 @@ c.y('Warning:', 'Disk space low', '(10% remaining)')
 // Works with objects and mixed types too
 c.c('User:', { name: 'John', age: 30 })
 c.m('Mixed types:', 'string', 123, { key: 'value' }, true)
+```
+
+### Using hashtag color codes
+
+You can also use the `l()` function with hashtag color codes:
+
+```javascript
+// Basic color codes
+c.l('#r This is red text')
+c.l('#g This is green text')
+c.l('#b This is blue text')
+
+// Background colors
+c.l('#rb This is red text with background')
+c.l('#gb This is green text with background')
+
+// Headers
+c.l('#rh This is red header')
+c.l('#gh This is green header')
+
+// Background + headers
+c.l('#rbh This is red background + header')
+c.l('#gbh This is green background + header')
+
+// Multiple arguments with different color codes
+c.l('#r Red text', '#g Green text', '#b Blue text')
+c.l('#gb This is green with a background', 'This is normal text')
+```
+
+## TypeScript Support
+
+This package includes TypeScript declarations. No additional installation is needed.
+
+```typescript
+import c from '@jmellicker/jlogs';
+
+c.b('This is typed!');
+c.l('#r Red text with TypeScript');
 ```
 
 ## Demo

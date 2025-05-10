@@ -22,6 +22,9 @@ const nodeColors = {
     m: (...args) => { nodePrint('#f533b7', 'hex', formatArgs(args)).catch(console.error) },
     r: (...args) => { nodePrint('#F00000', 'hex', formatArgs(args)).catch(console.error) },
 
+    // Hashtag color code function
+    l: (...args) => { processHashtagColors(args, nodeColors).catch(console.error) },
+
     ph: (...args) => { nodePrint('#C16DFF', 'hex', makeHeader(formatArgs(args))).catch(console.error) },
     bh: (...args) => { nodePrint('#7B8DFF', 'hex', makeHeader(formatArgs(args))).catch(console.error) },
     ch: (...args) => { nodePrint('#7BE9FF', 'hex', makeHeader(formatArgs(args))).catch(console.error) },
@@ -67,6 +70,9 @@ const browserColors = {
     m(...args) { browserPrint(formatArgs(args), 'color: #f533b7;') },
     r(...args) { browserPrint(formatArgs(args), 'color: red;') },
 
+    // Hashtag color code function
+    l(...args) { processHashtagColorsBrowser(args, this) },
+
     ph(...args) { this.p(makeHeader(formatArgs(args))); },
     bh(...args) { this.b(makeHeader(formatArgs(args))); },
     ch(...args) { this.c(makeHeader(formatArgs(args))); },
@@ -110,6 +116,48 @@ function formatArgs(args) {
 }
 
 function makeHeader(str) { return '======== ' + pretty(str) + ' ========' }
+
+// Process hashtag color codes for browser
+function processHashtagColorsBrowser(args, colors) {
+    for (const arg of args) {
+        if (typeof arg === 'string' && arg.startsWith('#')) {
+            const match = arg.match(/^#([a-z]{1,3})\s(.*)$/)
+            if (match) {
+                const [, colorCode, text] = match
+                if (colors[colorCode]) {
+                    colors[colorCode](text)
+                } else {
+                    console.log(arg)
+                }
+            } else {
+                console.log(arg)
+            }
+        } else {
+            console.log(arg)
+        }
+    }
+}
+
+// Process hashtag color codes for Node.js
+async function processHashtagColors(args, colors) {
+    for (const arg of args) {
+        if (typeof arg === 'string' && arg.startsWith('#')) {
+            const match = arg.match(/^#([a-z]{1,3})\s(.*)$/)
+            if (match) {
+                const [, colorCode, text] = match
+                if (colors[colorCode]) {
+                    await colors[colorCode](text)
+                } else {
+                    console.log(arg)
+                }
+            } else {
+                console.log(arg)
+            }
+        } else {
+            console.log(arg)
+        }
+    }
+}
 
 // Create the colors object based on environment
 const colors = isBrowser ? browserColors : nodeColors
